@@ -1,0 +1,57 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <script type="module">
+        const sse = new EventSource("/data");
+        const humidity = document.getElementById("humidity");
+        const temperatureC = document.getElementById("temperature-c");
+        const temperatureF = document.getElementById("temperature-f");
+        const heatIndexC = document.getElementById("heat-index-c");
+        const heatIndexF = document.getElementById("heat-index-f");
+
+        sse.addEventListener("message", function(msg){
+            /**@type { Record<string, number> } */
+            const { h, t, ft, hift, hict } = JSON.parse(msg.data);
+            humidity.innerText = h;
+            temperatureC.innerText = t.toFixed(2);
+            temperatureF.innerText = ft.toFixed(2);
+            heatIndexC.innerText = hict.toFixed(2);
+            heatIndexF.innerText = hift.toFixed(2);
+        });
+    </script>
+    <style>
+        html {
+            font-family: sans-serif;
+        }
+        body,html {
+            height: 100%;
+            margin: 0;
+            padding: 0;
+        }
+        body {
+            display: grid;
+            align-items: center;
+            justify-content: center;
+        }
+        main {
+            display: grid;
+            column-gap: 1em;
+            grid-template-columns: 1fr 1fr;
+            width: min-content;
+        }
+        main > div {
+            white-space: nowrap;
+        }
+    </style>
+</head>
+<body>
+    <main>
+        <div>Humidity:</div><div><span id="humidity"></span>%</div>
+        <div>Temperature:</div><div><span id="temperature-c"></span>°C <span id="temperature-f"></span>°F</div>
+        <div>Heat index:</div><div><span id="heat-index-c"></span>°C <span id="heat-index-f"></span>°F</div>
+    </main>
+</body>
+</html>

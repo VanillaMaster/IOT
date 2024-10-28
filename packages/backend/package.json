@@ -1,0 +1,18 @@
+{
+    "private": true,
+    "name": "backend",
+    "version": "0.0.1",
+    "type": "module",
+    "bin": {
+        "server": "bin/server.js"
+    },
+    "exports": null,
+    "files": [
+        "src/**/*",
+        "bin/**/*",
+        "res/**/*"
+    ],
+    "dependencies": {
+        "find-my-way": "^9.1.0"
+    }
+}
